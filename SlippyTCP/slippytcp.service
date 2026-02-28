@@ -1,0 +1,17 @@
+[Unit]
+Description=Slippy TCP service
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/python /usr/local/lib/slippytcp/slippytcp-server.py
+ExecStartPre=firewall-cmd --permanent --zone=public --add-service=slippytcp
+ExecStartPre=firewall-cmd --reload
+ExecStopPost=firewall-cmd --permanent --zone=public --remove-service=slippytcp
+ExecStopPost=firewall-cmd --reload
+
+[Install]
+WantedBy=multi-user.target
+
