@@ -40,6 +40,7 @@ After=network-online.target
 
 [Service]
 Type=oneshot
+Nice=19
 ExecStart=${APROBE_SCRIPT_PATH}
 EOF
 
@@ -58,9 +59,10 @@ Description=Refresh prefixes of ASNs to drop traffic from
 Wants=network-online.target
 
 [Timer]
-OnCalendar=*-*-* 0:00
+OnCalendar=daily
 RandomizedDelaySec=60m
 Persistent=true
+Unit=${APROBE_SERVICE_NAME}
 
 [Install]
 WantedBy=timers.target
